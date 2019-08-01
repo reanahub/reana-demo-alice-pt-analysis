@@ -1,15 +1,15 @@
 version: 0.3.0
 inputs:
   files:
-    - fix-env.sh
     - data.txt
     - AliAnalysisTaskEx01.cxx
     - AliAnalysisTaskEx01.h
     - runEx01.C
     - plot.C
     - OCDB.root
+    - fix-env.sh
   parameters:
-    data_location: http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0001/AliESDs.root
+    data_location: http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root
 workflow:
   type: serial
   specification:

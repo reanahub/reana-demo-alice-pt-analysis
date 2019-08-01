@@ -164,11 +164,11 @@ The user typically uses the output files to produce final plots. For example,
 running ``plot.C`` output macro on the ``AnalysisResults.root`` output file will
 permit to visualise the pt distribution of the accepted events:
 
-.. figure:: https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/blob/master/docs/plot_pt.png
+.. figure:: https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/master/docs/plot_pt.png
    :alt: plot_pt.png
    :align: center
 
-.. figure:: https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/blob/master/docs/plot_eta.png
+.. figure:: https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/master/docs/plot_eta.png
    :alt: plot_eta.png
    :align: center
 
