@@ -1,0 +1,44 @@
+# This file is part of REANA.
+# Copyright (C) 2022 CERN.
+#
+# REANA is free software; you can redistribute it and/or modify it
+# under the terms of the MIT License; see LICENSE file for more details.
+
+name: CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 7 * * 1"
+
+jobs:
+  validate:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Validate workflow spec
+        uses: reanahub/reana-github-actions/local-validate@v1
+        with:
+          reana_specs: reana.yaml
+
+  local-run:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run workflow locally
+        uses: reanahub/reana-github-actions/local-run@v1
+        with:
+          commands: |
+            docker run -i --rm -v `pwd`:/workdir reanahub/reana-env-aliphysics:vAN-20180614-1 bash -c ";
+              cd /workdir &&
+              mkdir -p data && wget -O ./data/AliESDs.root http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root &&
+              source ./fix-env.sh && root -b -q './runEx01.C' | tee run.log &&
+              source ./fix-env.sh && root -b -q './plot.C' | tee plot.log"
+            ls -l `pwd`/AnalysisResults.root
+            ls -l `pwd`/plot_pt.pdf
+            ls -l `pwd`/plot_eta.pdf
