@@ -16,7 +16,7 @@ workflow:
     steps:
       - environment: 'reanahub/reana-env-aliphysics:vAN-20180614-1'
         commands:
-        - mkdir data/ && wget -O data/AliESDs.root ${data_location}
+        - mkdir -p ./data && wget -O ./data/AliESDs.root ${data_location}
         - source ./fix-env.sh && root -b -q './runEx01.C' | tee run.log
         - source ./fix-env.sh && root -b -q './plot.C' | tee plot.log
 outputs:
