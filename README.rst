@@ -51,7 +51,7 @@ We select the first (0001) file that is only 10.6MB large, but feel free to sele
 
    $ mkdir -p data
    $ cd data
-   $ wget http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0001/AliESDs.root
+   $ curl -O http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0001/AliESDs.root
    $ cd ..
 
 Note that ``data.txt`` file should contain the path to the downloaded sample
@@ -120,7 +120,7 @@ follows:
    +-----------------------------------------+
    | (0) use data or download ESD input file |
    |                                         |
-   |    $ wget http://opendata.cern.ch/...   |
+   |  $ curl -O http://opendata.cern.ch/...  |
    +-----------------------------------------+
                       |
                       | ALIESD.root
@@ -218,7 +218,7 @@ workflow steps and expected outputs:
         steps:
           - environment: 'reanahub/reana-env-aliphysics:vAN-20180614-1'
             commands:
-            - mkdir -p ./data && wget -O ./data/AliESDs.root ${data_location}
+            - mkdir -p ./data && curl -fsS --retry 9 -o ./data/AliESDs.root ${data_location}
             - source fix-env.sh && root -b -q './runEx01.C' | tee run.log
             - mkdir -p results && source fix-env.sh && root -b -q './plot.C'
     outputs:
