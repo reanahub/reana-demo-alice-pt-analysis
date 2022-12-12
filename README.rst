@@ -1,6 +1,6 @@
-========================================================
+====================================================
  REANA example - ALICE simple analysis demonstrator
-========================================================
+====================================================
 
 .. image:: https://img.shields.io/travis/reanahub/reana-demo-alice-pt-analysis.svg
    :target: https://travis-ci.org/reanahub/reana-demo-alice-pt-analysis
@@ -15,7 +15,7 @@
    :target: https://reana.cern.ch/launch?url=https%3A%2F%2Fgithub.com%2Freanahub%2Freana-demo-alice-pt-analysis&name=reana-demo-alice-pt-analysis
 
 About
-======
+=====
 
 This REANA reproducible analysis example demonstrates the use of the ALICE analysis framework to facilitate the analysis
 of ALICE collision and simulated data samples for both pp and PbPb data taken in the year 2010.  The example was taken
@@ -27,9 +27,8 @@ ALICE physicists use custom tools that facilitate the analysis of real or simula
 samples. This example demonstrates the use of the ALICE analysis framework on small samples of
 both pp and PbPb data taken in the year 2010.
 
-
 Analysis structure
-===================
+==================
 
 Making a research data analysis reproducible basically means to provide
 "runnable recipes" addressing (1) where is the input data, (2) what software was
@@ -38,20 +37,19 @@ software and (4) which computational workflow steps were taken to run the
 analysis. This will permit to instantiate the analysis on the computational
 cloud and run the analysis to obtain (5) output results.
 
-
 1. Input data
 -------------
 
 The analysis uses (i) an ALICE ESD data file for either pp or PbPb collisions and (ii) an ODCB magnet configuration database.
 For the ESD data file, let us take an example that was published by the ALICE collaboration on the `CERN Open
-Data portal <http://opendata.cern.ch/>`_, e.g. from Pb-Pb collisions. Here, we use the sample at 3.5 TeV from run number 139038 in RunH 2010.
-We select the first (0001) file that is only 10.6MB large, but feel free to select bigger files.
+Data portal <http://opendata.cern.ch/>`_ from Pb-Pb collisions. Here, we use the sample at 3.5 TeV from run number 139038 in RunH 2010.
+We select the third (0003) file that is about 360 MB large in order to have a reasonable number of events for the example.
 
 .. code-block:: console
 
    $ mkdir -p data
    $ cd data
-   $ curl -O http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0001/AliESDs.root
+   $ curl -O http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root
    $ cd ..
 
 Note that ``data.txt`` file should contain the path to the downloaded sample
@@ -59,7 +57,6 @@ data file.
 
 For the magnet configuration database, let us take the ``OCDB.root`` file released
 on the `CERN Open Data portal <http://opendata.cern.ch/record/1200>`_
-
 
 2. Analysis code
 ----------------
@@ -102,9 +99,9 @@ you can follow `reana-env-aliphysics
    $ export ALIPHYSICS_VERSION=vAN-20180521-1
    $ make build
 
-
 4. Analysis workflow
 --------------------
+
 This analysis example consists of a script to run the task using aliroot, and then plots the results.
 
 The computational workflow is essentially sequential in nature. We can
@@ -150,10 +147,8 @@ follows:
 We shall see below how this sequence of commands is represented for the REANA
 serial workflow engine.
 
-
-5. Output results -
------------------------------
-
+5. Output results
+-----------------
 
 The test run will create `ROOT <https://root.cern.ch/>`_ output files that
 usually contain histograms.
@@ -174,8 +169,6 @@ permit to visualise the pt distribution of the accepted events:
 .. figure:: https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/master/docs/plot_eta.png
    :alt: plot_eta.png
    :align: center
-
-
 
 Running the example on REANA cloud
 ==================================
@@ -211,7 +204,7 @@ workflow steps and expected outputs:
         - plot.C
         - OCDB.root
       parameters:
-        data_location: http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0001/AliESDs.root
+        data_location: http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root
     workflow:
       type: serial
       specification:
@@ -226,8 +219,6 @@ workflow steps and expected outputs:
         - AnalysisResults.root
         - results/plot_pt.pdf
         - results/plot_eta.pdf
-
-
 
 We can now install the REANA command-line client, run the analysis and download the resulting plots:
 
