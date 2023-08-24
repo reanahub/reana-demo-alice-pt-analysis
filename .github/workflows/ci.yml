@@ -1,5 +1,5 @@
 # This file is part of REANA.
-# Copyright (C) 2022 CERN.
+# Copyright (C) 2022, 2023 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -36,7 +36,7 @@ jobs:
           commands: |
             docker run -i --rm -v `pwd`:/workdir reanahub/reana-env-aliphysics:vAN-20180614-1 bash -c ";
               cd /workdir &&
-              mkdir -p ./data && curl -fsS --retry 9 -o ./data/AliESDs.root http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root &&
+              mkdir -p ./data && curl -fsS --retry 9 -o ./data/AliESDs.root http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0002/AliESDs.root &&
               source ./fix-env.sh && root -b -q './runEx01.C' | tee run.log &&
               source ./fix-env.sh && root -b -q './plot.C' | tee plot.log"
             ls -l `pwd`/AnalysisResults.root
