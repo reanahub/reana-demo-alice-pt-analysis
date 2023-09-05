@@ -49,7 +49,7 @@ We select the third (0003) file that is about 360 MB large in order to have a re
 
    $ mkdir -p data
    $ cd data
-   $ curl -O http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root
+   $ curl -O http://opendata.cern.ch/eos/opendata/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root
    $ cd ..
 
 Note that ``data.txt`` file should contain the path to the downloaded sample
@@ -204,7 +204,7 @@ workflow steps and expected outputs:
         - plot.C
         - OCDB.root
       parameters:
-        data_location: http://opendata.cern.ch/record/1102/files/assets/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root
+        data_location: http://opendata.cern.ch/eos/opendata/alice/2010/LHC10h/000139038/ESD/0003/AliESDs.root
     workflow:
       type: serial
       specification:
