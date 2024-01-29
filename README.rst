@@ -249,11 +249,3 @@ We can now install the REANA command-line client, run the analysis and download 
 Please see the `REANA-Client <https://reana-client.readthedocs.io/>`_
 documentation for more detailed explanation of typical ``reana-client`` usage
 scenarios.
-
-Contributors
-============
-
-The list of contributors in alphabetical order:
-
-- `Daniel Prelipcean <https://orcid.org/0000-0002-4855-194X>`_
-- `Tibor Simko <https://orcid.org/0000-0001-7202-5803>`_
