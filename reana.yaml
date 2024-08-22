@@ -24,3 +24,7 @@ outputs:
     - AnalysisResults.root
     - plot_pt.pdf
     - plot_eta.pdf
+tests:
+  files:
+    - tests/data-processing.feature
+    - tests/results-generation.feature
