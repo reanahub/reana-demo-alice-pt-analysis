@@ -7,36 +7,37 @@
 
 ## About
 
-This REANA reproducible analysis example demonstrates the use of the ALICE analysis
-framework to facilitate the analysis of ALICE collision and simulated data samples for
-both pp and PbPb data taken in the year 2010. The example was taken from an
-[analysis example](http://opendata.cern.ch/record/1200) from the
-[CERN Open Data portal](http://opendata.cern.ch/) and illustrates how to convert it into
-a reusable analysis (REANA) example, as it uses a complex computing
+This REANA reproducible analysis example demonstrates the use of the ALICE
+analysis framework to facilitate the analysis of ALICE collision and simulated
+data samples for both pp and PbPb data taken in the year 2010. The example was
+taken from an [analysis example](http://opendata.cern.ch/record/1200) from the
+[CERN Open Data portal](http://opendata.cern.ch/) and illustrates how to convert
+it into a reusable analysis (REANA) example, as it uses a complex computing
 environment that is not publicly available.
 
-ALICE physicists use custom tools that facilitate the analysis of real or simulated ALICE
-data samples. This example demonstrates the use of the ALICE analysis framework on small
-samples of both pp and PbPb data taken in the year 2010.
+ALICE physicists use custom tools that facilitate the analysis of real or
+simulated ALICE data samples. This example demonstrates the use of the ALICE
+analysis framework on small samples of both pp and PbPb data taken in the year
+2010.
 
 ## Analysis structure
 
-Making a research data analysis reproducible basically means to provide "runnable
-recipes" addressing (1) where is the input data, (2) what software was used to analyse
-the data, (3) which computing environments were used to run the software and (4) which
-computational workflow steps were taken to run the analysis. This will permit to
-instantiate the analysis on the computational cloud and run the analysis to obtain (5)
-output results.
+Making a research data analysis reproducible basically means to provide
+"runnable recipes" addressing (1) where is the input data, (2) what software was
+used to analyse the data, (3) which computing environments were used to run the
+software and (4) which computational workflow steps were taken to run the
+analysis. This will permit to instantiate the analysis on the computational
+cloud and run the analysis to obtain (5) output results.
 
 ### 1. Input data
 
-The analysis uses (i) an ALICE ESD data file for either pp or PbPb collisions and (ii) an
-ODCB magnet configuration database. For the ESD data file, let us take an example that
-was published by the ALICE collaboration on the
-[CERN Open Data portal](http://opendata.cern.ch/) from Pb-Pb collisions. Here, we use the
-sample at 3.5 TeV from run number 139038 in RunH 2010. We select the third (0003) file
-that is about 360 MB large in order to have a reasonable number of events for the
-example.
+The analysis uses (i) an ALICE ESD data file for either pp or PbPb collisions
+and (ii) an ODCB magnet configuration database. For the ESD data file, let us
+take an example that was published by the ALICE collaboration on the [CERN Open
+Data portal](http://opendata.cern.ch/) from Pb-Pb collisions. Here, we use the
+sample at 3.5 TeV from run number 139038 in RunH 2010. We select the third
+(0003) file that is about 360 MB large in order to have a reasonable number of
+events for the example.
 
 ```console
 $ mkdir -p data
@@ -45,17 +46,18 @@ $ curl -O http://opendata.cern.ch/eos/opendata/alice/2010/LHC10h/000139038/ESD/0
 $ cd ..
 ```
 
-Note that `data.txt` file should contain the path to the downloaded sample data file.
+Note that `data.txt` file should contain the path to the downloaded sample data
+file.
 
-For the magnet configuration database, let us take the `OCDB.root` file released on the
-[CERN Open Data portal](http://opendata.cern.ch/record/1200)
+For the magnet configuration database, let us take the `OCDB.root` file released
+on the [CERN Open Data portal](http://opendata.cern.ch/record/1200)
 
 ### 2. Analysis code
 
-The user analysis is represented by a C++ class, which has to implement a few predefined
-methods to process one interaction event. A template analysis class extracting the
-inclusive transverse momentum and pseudorapidity spectra of all tracks can be modified to
-create your own analysis.
+The user analysis is represented by a C++ class, which has to implement a few
+predefined methods to process one interaction event. A template analysis class
+extracting the inclusive transverse momentum and pseudorapidity spectra of all
+tracks can be modified to create your own analysis.
 
 This example uses the [AliPhysics](https://github.com/alisw/AliPhysics) analysis
 framework with the following source code files:
@@ -64,16 +66,18 @@ framework with the following source code files:
 - [runEx01.C](runEx01.C) - the main analysis script
 - [plot.C](plot.C) - script to extract data and plot the figures from the resulting ROOT
   file
+
 - [AliAnalysisTaskEx01.cxx](AliAnalysisTaskEx01.cxx) - the example script analysing the
   Pt spectrum
+
 - [AliAnalysisTaskEx01.h](AliAnalysisTaskEx01.h) - ROOT library for customization
 
 ### 3. Compute environment
 
-This example uses [AliPhysics](https://github.com/alisw/AliPhysics) analysis framework.
-It has been containerised as
-[reana-env-aliphysics](https://github.com/reanahub/reana-env-aliphysics) environment. You
-can fetch some wanted AliPhysics version from Docker Hub:
+This example uses [AliPhysics](https://github.com/alisw/AliPhysics) analysis
+framework. It has been containerised as
+[reana-env-aliphysics](https://github.com/reanahub/reana-env-aliphysics)
+environment. You can fetch some wanted AliPhysics version from Docker Hub:
 
 ```console
 $ docker pull docker.io/reanahub/reana-env-aliphysics:vAN-20180614-1
@@ -81,8 +85,9 @@ $ docker pull docker.io/reanahub/reana-env-aliphysics:vAN-20180614-1
 
 We shall use the `vAN-20180614-1` version for the present example.
 
-Note that if you would like to build a different AliPhysics version on your own, you can
-follow [reana-env-aliphysics](https://github.com/reanahub/reana-env-aliphysics)
+Note that if you would like to build a different AliPhysics version on your own,
+you can follow
+[reana-env-aliphysics](https://github.com/reanahub/reana-env-aliphysics)
 procedures and set `ALIPHYSICS_VERSION` environment variable appropriately:
 
 ```console
@@ -93,11 +98,11 @@ $ make build
 
 ### 4. Analysis workflow
 
-This analysis example consists of a script to run the task using aliroot, and then plots
-the results.
+This analysis example consists of a script to run the task using aliroot, and
+then plots the results.
 
-The computational workflow is essentially sequential in nature. We can use the REANA
-serial workflow engine and represent the analysis workflow as follows:
+The computational workflow is essentially sequential in nature. We can use the
+REANA serial workflow engine and represent the analysis workflow as follows:
 
 ```console
                  START
@@ -135,42 +140,43 @@ serial workflow engine and represent the analysis workflow as follows:
                   STOP
 ```
 
-We shall see below how this sequence of commands is represented for the REANA serial
-workflow engine.
+We shall see below how this sequence of commands is represented for the REANA
+serial workflow engine.
 
 ### 5. Output results
 
-The test run will create [ROOT](https://root.cern.ch/) output files that usually contain
-histograms.
+The test run will create [ROOT](https://root.cern.ch/) output files that usually
+contain histograms.
 
 ```console
 $ ls -l AnalysisResults.root
 -rw-r--r-- 1 root root  31187 July 18 17:35 AnalysisResults.root
 ```
 
-The user typically uses the output files to produce final plots. For example, running
-`plot.C` output macro on the `AnalysisResults.root` output file will permit to visualise
-the pt distribution of the accepted events:
+The user typically uses the output files to produce final plots. For example,
+running `plot.C` output macro on the `AnalysisResults.root` output file will
+permit to visualise the pt distribution of the accepted events:
 
-![](https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/master/docs/plot_pt.png)
+![image](https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/master/docs/plot_pt.png)
 
-![](https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/master/docs/plot_eta.png)
+![image](https://raw.githubusercontent.com/reanahub/reana-demo-alice-pt-analysis/master/docs/plot_eta.png)
 
 ## Running the example on REANA cloud
 
 There are two ways to execute this analysis example on REANA.
 
-If you would like to simply launch this analysis example on the REANA instance at CERN
-and inspect its results using the web interface, please click on the following badge:
+If you would like to simply launch this analysis example on the REANA instance
+at CERN and inspect its results using the web interface, please click on the
+following badge:
 
 [![image](https://www.reana.io/static/img/badges/launch-on-reana-at-cern.svg)](https://reana.cern.ch/launch?url=https%3A%2F%2Fgithub.com%2Freanahub%2Freana-demo-alice-pt-analysis&name=reana-demo-alice-pt-analysis)
 
-If you would like a step-by-step guide on how to use the REANA command-line client to
-launch this analysis example, please read on.
+If you would like a step-by-step guide on how to use the REANA command-line
+client to launch this analysis example, please read on.
 
-We start by creating a [reana.yaml](reana.yaml) file describing the above analysis
-structure with its inputs, code, runtime environment, computational workflow steps and
-expected outputs:
+We start by creating a [reana.yaml](reana.yaml) file describing the above
+analysis structure with its inputs, code, runtime environment, computational
+workflow steps and expected outputs:
 
 ```yaml
 version: 0.3.0
@@ -201,8 +207,8 @@ outputs:
     - results/plot_eta.pdf
 ```
 
-We can now install the REANA command-line client, run the analysis and download the
-resulting plots:
+We can now install the REANA command-line client, run the analysis and download
+the resulting plots:
 
 ```console
 $ # create new virtual environment
@@ -228,5 +234,6 @@ $ # download results root file and generated plots
 $ reana-client download
 ```
 
-Please see the [REANA-Client](https://reana-client.readthedocs.io/) documentation for
-more detailed explanation of typical `reana-client` usage scenarios.
+Please see the [REANA-Client](https://reana-client.readthedocs.io/)
+documentation for more detailed explanation of typical `reana-client` usage
+scenarios.
