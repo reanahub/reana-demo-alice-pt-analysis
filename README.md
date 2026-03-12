@@ -17,8 +17,8 @@ environment that is not publicly available.
 
 ALICE physicists use custom tools that facilitate the analysis of real or
 simulated ALICE data samples. This example demonstrates the use of the ALICE
-analysis framework on small samples of both pp and PbPb data taken in the year
-2010.
+analysis framework on small samples of both pp and PbPb data taken in the
+year 2010.
 
 ## Analysis structure
 
@@ -33,11 +33,11 @@ cloud and run the analysis to obtain (5) output results.
 
 The analysis uses (i) an ALICE ESD data file for either pp or PbPb collisions
 and (ii) an ODCB magnet configuration database. For the ESD data file, let us
-take an example that was published by the ALICE collaboration on the [CERN Open
-Data portal](http://opendata.cern.ch/) from Pb-Pb collisions. Here, we use the
-sample at 3.5 TeV from run number 139038 in RunH 2010. We select the third
-(0003) file that is about 360 MB large in order to have a reasonable number of
-events for the example.
+take an example that was published by the ALICE collaboration on the
+[CERN Open Data portal](http://opendata.cern.ch/) from Pb-Pb collisions. Here,
+we use the sample at 3.5 TeV from run number 139038 in RunH 2010. We select the
+third (0003) file that is about 360 MB large in order to have a reasonable
+number of events for the example.
 
 ```console
 $ mkdir -p data
@@ -64,13 +64,14 @@ framework with the following source code files:
 
 - [fix-env.sh](fix-env.sh) - to fix the configuration environment variables
 - [runEx01.C](runEx01.C) - the main analysis script
-- [plot.C](plot.C) - script to extract data and plot the figures from the resulting ROOT
-  file
+- [plot.C](plot.C) - script to extract data and plot the figures from the
+  resulting ROOT file
 
-- [AliAnalysisTaskEx01.cxx](AliAnalysisTaskEx01.cxx) - the example script analysing the
-  Pt spectrum
+- [AliAnalysisTaskEx01.cxx](AliAnalysisTaskEx01.cxx) - the example script
+  analysing the Pt spectrum
 
-- [AliAnalysisTaskEx01.h](AliAnalysisTaskEx01.h) - ROOT library for customization
+- [AliAnalysisTaskEx01.h](AliAnalysisTaskEx01.h) - ROOT library for
+  customization
 
 ### 3. Compute environment
 
@@ -195,11 +196,12 @@ workflow:
   type: serial
   specification:
     steps:
-      - environment: 'docker.io/reanahub/reana-env-aliphysics:vAN-20180614-1'
+      - environment: "docker.io/reanahub/reana-env-aliphysics:vAN-20180614-1"
         commands:
-        - mkdir -p ./data && curl -fsS --retry 9 -o ./data/AliESDs.root ${data_location}
-        - source fix-env.sh && root -b -q './runEx01.C' | tee run.log
-        - mkdir -p results && source fix-env.sh && root -b -q './plot.C'
+          - mkdir -p ./data && curl -fsS --retry 9 -o ./data/AliESDs.root
+            ${data_location}
+          - source fix-env.sh && root -b -q './runEx01.C' | tee run.log
+          - mkdir -p results && source fix-env.sh && root -b -q './plot.C'
 outputs:
   files:
     - AnalysisResults.root
